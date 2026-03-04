@@ -48,5 +48,6 @@ healthRouter.get(Routes.HEALTH, async (_req: Request, res: Response) => {
   return res.status(200).json({
     ok: true,
     latencyMs,
+    checks,
   });
 });
