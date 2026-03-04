@@ -1,9 +1,10 @@
 // file: src/app.ts
 
-import express, { type Express, type Request, type Response } from "express";
+import express, { type Express } from "express";
 import { requestLogger } from "./middleware/requestLogger.js";
 import { applySecurityMiddleware } from "./middleware/security.js";
 import { registerErrorHandlers } from "./middleware/errors.js";
+import { healthRouter } from "./controller/health.controller.js";
 
 /**
  * Create and configure the Express application.
@@ -14,10 +15,7 @@ export function createApp(): Express {
 
   app.use(requestLogger());
   applySecurityMiddleware(app);
-
-  app.get("/health", (_req: Request, res: Response) => {
-    res.status(200).json({ ok: true });
-  });
+  app.use(healthRouter);
 
   registerErrorHandlers(app);
   return app;
